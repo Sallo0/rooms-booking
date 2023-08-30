@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+
+  database:
+    container_name: database
+    image: postgres:14.2-alpine
+    env_file:
+      - ./.env_docker
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      PGDATA: /var/lib/postgresql/data
+    expose:
+      - ${DB_PORT}
+    volumes:
+      - booking_course:/var/lib/postgresql/data
+
+  server:
+    container_name: server
+    image: app-image
+    build: .
+    env_file:
+      - ./.env_docker
+    command: uvicorn app.main:app --host 0.0.0.0 --reload
+    ports:
+      - 8000:8000
+    depends_on:
+      - redis
+      - database
+#
+#  nginx:
+#    container_name: nginx
+#    image: ${IMAGE_NGINX}
+#    build: ./nginx
+#    ports:
+#      - 127.0.0.1:9000:80
+#    volumes:
+#      - app-static:/usr/src/app/src/static
+#    depends_on:
+#      - server
+#      - bot
+
+  redis:
+    container_name: redis
+    image: redis-image
+    build: ./redis
+    expose:
+      - 6379
+
+  celery:
+    container_name: celery
+    image: app-image
+    build: .
+    env_file:
+      - ./.env_docker
+    command: make upcelery
+    depends_on:
+      - redis
+
+volumes:
+  booking_course:
+    external: true
+
