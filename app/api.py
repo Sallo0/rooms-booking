@@ -9,12 +9,12 @@ from fastapi_cache.backends.redis import RedisBackend
 from fastapi_versioning import VersionedFastAPI
 
 from app.bookings.router import router as bookings_router
+from app.config import settings
 from app.hotels.rooms.router import router as rooms_router
 from app.hotels.router import router as hotels_router
 from app.images.router import router as images_router
 from app.pages.router import router as pages_router
 from app.users.router import router as users_router
-from app.config import settings
 
 
 @asynccontextmanager

@@ -3,9 +3,9 @@ from datetime import date
 from sqlalchemy import select
 
 from app.bookings.models import Bookings
+from app.database import async_session_maker
 from app.hotels.rooms.models import Rooms
 from app.repo.base import BaseRepo
-from app.database import async_session_maker
 
 
 class RoomsRepo(BaseRepo):

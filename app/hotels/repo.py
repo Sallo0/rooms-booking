@@ -2,8 +2,8 @@ from sqlalchemy import select
 
 from app.database import async_session_maker
 from app.hotels.models import Hotels
-from app.repo.base import BaseRepo
 from app.hotels.rooms.repo import RoomsRepo as rooms_repo
+from app.repo.base import BaseRepo
 
 
 class HotelsRepo(BaseRepo):
