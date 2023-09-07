@@ -2,6 +2,8 @@ from datetime import date
 
 from pydantic import BaseModel, ConfigDict
 
+from app.hotels.rooms.schemas import SRoom
+
 
 class SBooking(BaseModel):
     id: int
@@ -12,5 +14,11 @@ class SBooking(BaseModel):
     price: int
     total_cost: int
     total_days: int
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class SBookingWithRoom(SBooking):
+    room: SRoom
 
     model_config = ConfigDict(from_attributes=True)

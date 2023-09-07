@@ -14,21 +14,20 @@ from app.hotels.router import router as hotels_router
 from app.images.router import router as images_router
 from app.pages.router import router as pages_router
 from app.users.router import router as users_router
+from app.config import settings
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    redis = await aioredis.from_url("redis://localhost")
+    redis = await aioredis.from_url(
+        f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}"
+    )
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
     yield
     await redis.flushall()
 
 
-app = FastAPI(
-    title="Hotel API",
-    lifespan=lifespan,
-    root_path="/api"
-)
+app = FastAPI(title="Hotel API", lifespan=lifespan, root_path="/api")
 
 app.include_router(users_router)
 app.include_router(bookings_router)
@@ -36,10 +35,11 @@ app.include_router(hotels_router)
 app.include_router(rooms_router)
 app.include_router(images_router)
 
-app = VersionedFastAPI(app,
-                       version_format="{major}",
-                       prefix_format="/api/v{major}",
-                       )
+app = VersionedFastAPI(
+    app,
+    version_format="{major}",
+    prefix_format="/api/v{major}",
+)
 
 app.include_router(pages_router)
 app.mount("/static", StaticFiles(directory="app/static"), "static")
@@ -51,8 +51,13 @@ app.add_middleware(
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    allow_headers=["Content-Type", "Authorization", "Set-Cookie", "Access-Control-Allow-Origin",
-                   "Access-Control-Allow-Headers"],
+    allow_headers=[
+        "Content-Type",
+        "Authorization",
+        "Set-Cookie",
+        "Access-Control-Allow-Origin",
+        "Access-Control-Allow-Headers",
+    ],
 )
 
 
