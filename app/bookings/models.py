@@ -1,23 +1,24 @@
-from sqlalchemy import Column, Computed, Date, ForeignKey, Integer
-from sqlalchemy.orm import relationship
+from datetime import date
+
+from sqlalchemy import Column, Computed, ForeignKey, Integer
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
 
 
 class Bookings(Base):
     __tablename__ = "bookings"
-    id = Column(Integer, primary_key=True, index=True)
-    room_id = Column(ForeignKey("rooms.id"), nullable=False)
-    user_id = Column(ForeignKey("users.id"), nullable=False)
-    date_from = Column(Date, nullable=False)
-    date_to = Column(Date, nullable=False)
-    price = Column(Integer, nullable=False)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    room_id: Mapped[int] = mapped_column(ForeignKey("rooms.id"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    date_from: Mapped[date]
+    date_to: Mapped[date]
+    price: Mapped[int]
     total_cost = Column(Integer, Computed("(date_to - date_from) * price"), nullable=False)
     total_days = Column(Integer, Computed("date_to - date_from"), nullable=False)
 
-    room = relationship("Rooms", back_populates="bookings")
-    user = relationship("Users", back_populates="bookings")
+    room: Mapped["Rooms"] = relationship(back_populates="bookings")
+    user: Mapped["Users"] = relationship(back_populates="bookings")
 
     def __repr__(self):
         return f"<Booking {self.id}>"
-
