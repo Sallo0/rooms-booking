@@ -1,0 +1,25 @@
+# extra
+redis
+
+# envs
+.env
+.env_docker
+.env_example
+
+# IDE
+.idea
+.vscode
+
+# Docker
+docker-compose.yaml
+docker-compose.dev.yaml
+Dockerfile
+.dockerignore
+
+# git
+.git
+.gitignore
+
+# pipenv
+Pipfile
+Pipfile.lock
