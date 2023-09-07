@@ -17,8 +17,3 @@ class SBooking(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
-
-class SBookingWithRoom(SBooking):
-    room: SRoom
-
-    model_config = ConfigDict(from_attributes=True)

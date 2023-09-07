@@ -13,16 +13,16 @@ class BookingRepo(BaseRepo):
 
     @classmethod
     async def find_all(cls, **filters):
-        async with async_session_maker() as session:
-            query = (
-                select(
-                    Bookings.__table__.columns,
-                    Rooms.__table__.columns,
-                )
-                .select_from(Bookings)
-                .join(Rooms, Rooms.id == Bookings.room_id)
-                .filter_by(**filters)
+        query = (
+            select(
+                Bookings.__table__.columns,
+                Rooms.__table__.columns,
             )
+            .select_from(Bookings)
+            .filter_by(**filters)
+            .join(Rooms, Rooms.id == Bookings.room_id)
+        )
+        async with async_session_maker() as session:
             result = await session.execute(query)
             return result.mappings().all()
 
