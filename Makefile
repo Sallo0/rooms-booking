@@ -76,3 +76,6 @@ upsmtp:
 
 updev:
 	docker-compose -f docker-compose.dev.yaml up -d
+
+downdev:
+	docker-compose -f docker-compose.dev.yaml down

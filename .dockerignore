@@ -3,8 +3,8 @@ redis
 
 # envs
 .env
-.env_docker
-.env_example
+.docker.env
+.example.env
 
 # IDE
 .idea

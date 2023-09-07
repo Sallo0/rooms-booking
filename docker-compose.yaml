@@ -6,7 +6,7 @@ services:
     container_name: database
     image: postgres:14.2-alpine
     env_file:
-      - ./.env_docker
+      - .docker.env
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
@@ -24,7 +24,7 @@ services:
         context: .
         dockerfile: Dockerfile
     env_file:
-      - ./.env_docker
+      - .docker.env
     command: uvicorn app.main:app --host 0.0.0.0 --reload
     ports:
       - 8000:8000
@@ -55,7 +55,7 @@ services:
     container_name: celery
     image: booking-image
     env_file:
-      - ./.env_docker
+      - .docker.env
     command: make upcelery
     depends_on:
       - redis

@@ -6,14 +6,14 @@ services:
     container_name: database
     image: postgres:14.2-alpine
     env_file:
-      - ./.env_docker
+      - .docker.env
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       PGDATA: /var/lib/postgresql/data
-    expose:
-      - ${DB_PORT}
+    ports:
+      - ${DB_PORT}:5432
     volumes:
       - booking_course:/var/lib/postgresql/data
 
@@ -22,7 +22,7 @@ services:
     image: booking-image
     build: .
     env_file:
-      - ./.env_docker
+      - .docker.env
     command: uvicorn app.main:app --host 0.0.0.0 --reload
     ports:
       - 8000:8000
@@ -56,7 +56,7 @@ services:
     image: booking-image
     build: .
     env_file:
-      - ./.env_docker
+      - .docker.env
     command: make upcelery
     depends_on:
       - redis
