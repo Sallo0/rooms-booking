@@ -1,4 +1,6 @@
-from sqlalchemy import select
+from datetime import date
+
+from sqlalchemy import func, select
 
 from app.database import async_session_maker
 from app.hotels.models import Hotels
@@ -10,9 +12,14 @@ class HotelsRepo(BaseRepo):
     model = Hotels
 
     @classmethod
-    async def find_by_location_and_time(cls, location, date_from, date_to):
+    async def find_by_location_and_time(cls, location: str, date_from: date, date_to: date):
         async with async_session_maker() as session:
-            query = select(cls.model).filter_by(id=location)
+            query = select(cls.model).filter(
+                func.to_tsvector(
+                    "russian", func.concat(Hotels.location, " ", Hotels.name)
+                ).match(location, postgresql_regconfig="russian")
+            )
+
             hotels = await session.execute(query)
             hotels = hotels.scalars().all()
 
