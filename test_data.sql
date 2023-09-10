@@ -1,4 +1,4 @@
-INSERT INTO hotels (name, location, services, slug, image_id) VALUES 
+INSERT INTO hotels (name, location, services, slug, image_id) VALUES
 ('Cosmos Collection Altay Resort', 'Республика Алтай, Майминский район, село Урлу-Аспак, Лесхозная улица, 20', '["Wi-Fi", "Бассейн", "Парковка", "Кондиционер в номере"]', 'cosmos-collection-altay-resort', 1),
 ('Skala', 'Республика Алтай, Майминский район, поселок Барангол, Чуйская улица 40а', '["Wi-Fi", "Парковка"]', 'skala',2),
 ('Ару-Кёль', 'Республика Алтай, Турочакский район, село Артыбаш, Телецкая улица, 44А', '["Парковка"]', 'aru-kiol', 3),
