@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date
 
 from fastapi import APIRouter
 
@@ -35,4 +35,4 @@ async def update_room():
 
 @router.get("/{hotel_id}/rooms")
 async def get_rooms_by_time(hotel_id: int, date_from: date, date_to: date) -> list[SRoom]:
-    return await rooms_repo.find_all(hotel_id=hotel_id)
+    return await rooms_repo.get_free_rooms(hotel_id, date_from, date_to)

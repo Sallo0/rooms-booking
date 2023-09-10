@@ -66,6 +66,16 @@ check_lint:
 	pyright .
 
 
+# smtp
 
 upsmtp:
 	python -m smtpd -c DebuggingServer -n localhost:1025
+
+
+# dev
+
+updev:
+	docker-compose -f docker-compose.dev.yaml up -d
+
+downdev:
+	docker-compose -f docker-compose.dev.yaml down

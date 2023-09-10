@@ -30,7 +30,7 @@ async def get_register_page(request: Request):
 @router.get("/hotels/{location}", response_class=HTMLResponse)
 async def get_hotels_page(
         request: Request,
-        location: int,
+        location: str,
         date_to: date,
         date_from: date,
         hotels=Depends(get_hotels_by_location_and_time),

@@ -1,5 +1,7 @@
 from datetime import datetime, timedelta
 
+import slugify
+
 
 def get_month_days(date: datetime = datetime.today()):
     counter = datetime(date.year, date.month, datetime.today().day, tzinfo=date.tzinfo)
@@ -13,7 +15,11 @@ def get_month_days(date: datetime = datetime.today()):
 
 
 def format_number_thousand_separator(
-        number: int,
-        separator: str = " ",
+    number: int,
+    separator: str = " ",
 ):
     return f"{number:,}".replace(",", separator)
+
+
+def get_slug(value: str):
+    return slugify.slugify(value, separator="-")

@@ -12,22 +12,22 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       PGDATA: /var/lib/postgresql/data
-    expose:
-      - ${DB_PORT}
+    ports:
+      - ${DB_PORT}:5432
     volumes:
       - booking_course:/var/lib/postgresql/data
 
   server:
     container_name: server
     image: booking-image
-    build:
-        context: .
-        dockerfile: Dockerfile
+    build: .
     env_file:
       - .docker.env
     command: uvicorn app.main:app --host 0.0.0.0 --reload
     ports:
       - 8000:8000
+    volumes:
+      - .:/usr/src/booking
     depends_on:
       - redis
       - database
@@ -54,6 +54,7 @@ services:
   celery:
     container_name: celery
     image: booking-image
+    build: .
     env_file:
       - .docker.env
     command: make upcelery

@@ -1,7 +1,6 @@
 from datetime import date
 
 from fastapi import APIRouter, Depends
-from fastapi_cache.decorator import cache
 
 from app.bookings.repo import BookingRepo as booking_repo
 from app.bookings.schemas import SBooking
