@@ -4,15 +4,12 @@ from fastapi import APIRouter, Depends, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
-from app.bookings.router import add_booking, get_bookings
+from app.bookings.router import add_booking, get_bookings, delete_booking
 from app.hotels.rooms.router import get_rooms_by_time
 from app.hotels.router import get_hotel, get_hotels_by_location_and_time
 from app.utils import format_number_thousand_separator, get_month_days
 
-router = APIRouter(
-    prefix="/pages",
-    tags=["Frontend"]
-)
+router = APIRouter(prefix="/pages", tags=["Frontend"])
 
 templates = Jinja2Templates(directory="app/templates")
 
@@ -29,11 +26,11 @@ async def get_register_page(request: Request):
 
 @router.get("/hotels/{location}", response_class=HTMLResponse)
 async def get_hotels_page(
-        request: Request,
-        location: str,
-        date_to: date,
-        date_from: date,
-        hotels=Depends(get_hotels_by_location_and_time),
+    request: Request,
+    location: str,
+    date_to: date,
+    date_from: date,
+    hotels=Depends(get_hotels_by_location_and_time),
 ):
     dates = get_month_days()
     if date_from > date_to:
@@ -81,18 +78,28 @@ async def get_rooms_page(
 
 @router.post("/successful_booking", response_class=HTMLResponse)
 async def get_successful_booking_page(
-        request: Request,
-        _=Depends(add_booking),
+    request: Request,
+    _=Depends(add_booking),
 ):
     return templates.TemplateResponse(
         "bookings/booking_successful.html", {"request": request}
     )
 
 
+@router.post("/booking_deleted", response_class=HTMLResponse)
+async def get_booking_deleted_page(
+    request: Request,
+    _=Depends(delete_booking),
+):
+    return templates.TemplateResponse(
+        "bookings/booking_deleted.html", {"request": request}
+    )
+
+
 @router.get("/bookings", response_class=HTMLResponse)
 async def get_bookings_page(
-        request: Request,
-        bookings=Depends(get_bookings),
+    request: Request,
+    bookings=Depends(get_bookings),
 ):
     return templates.TemplateResponse(
         "bookings/bookings.html",

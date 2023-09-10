@@ -41,7 +41,7 @@ async def add_booking(room_id: int, date_from: date, date_to: date,
 
 @router.delete("/{booking_id}")
 async def delete_booking(booking_id: int, user: Users = Depends(get_current_user)):
-    pass
+    return await booking_repo.delete(id=booking_id)
 
 
 @router.put("/{booking_id}")
