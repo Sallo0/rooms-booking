@@ -9,10 +9,10 @@
         window.location.href = `/pages/hotels/${searchInputValue}?date_from=${dateFromSelectValue}&date_to=${dateToSelectValue}`;
     }
 
-    const exploreHotelRooms = (hotel_id) => {
+    const exploreHotelRooms = (hotel_slug) => {
         const dateFromSelectValue = document.getElementById("date_from").value;
         const dateToSelectValue = document.getElementById("date_to").value;
-        window.location.href = `/pages/hotels/${hotel_id}/rooms?date_from=${dateFromSelectValue}&date_to=${dateToSelectValue}`;
+        window.location.href = `/pages/hotels/${hotel_slug}/rooms?date_from=${dateFromSelectValue}&date_to=${dateToSelectValue}`;
     }
 </script>
 {% endblock %}
@@ -61,7 +61,7 @@
                             <span class="font-bold text-3xl">25 999</span>
                         </div> -->
                         <!-- <span class="mb-5">за 12 ночей</span> -->
-                        <button onclick="exploreHotelRooms('{{ hotel.id }}')"
+                        <button onclick="exploreHotelRooms('{{ hotel.slug }}')"
                                 class="text-lg bg-yellow-400 px-3 py-1 rounded-3xl">
                             Выбрать номер
                         </button>

@@ -4,7 +4,6 @@ from app.admin.admin import admin  # noqa
 from app.api import app  # noqa
 
 # TODO: sql mapping
-# TODO: use slug in url
 # TODO: add tests
 # TODO: logging and monitoring
 # TODO: prometheus grafana

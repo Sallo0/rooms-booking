@@ -50,7 +50,7 @@ async def get_hotels_page(
     )
 
 
-@router.get("/hotels/{hotel_id}/rooms", response_class=HTMLResponse)
+@router.get("/hotels/{hotel_slug}/rooms", response_class=HTMLResponse)
 async def get_rooms_page(
     request: Request,
     date_from: date,

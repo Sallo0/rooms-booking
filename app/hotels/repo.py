@@ -26,7 +26,7 @@ class HotelsRepo(BaseRepo):
         hotels = [
             hotel
             for hotel in hotels
-            if await rooms_repo.get_free_rooms(hotel.id, date_from, date_to)
+            if await rooms_repo.get_free_rooms(hotel.slug, date_from, date_to)
         ]
 
         return hotels

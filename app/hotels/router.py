@@ -13,9 +13,9 @@ async def get_hotels() -> list[SHotel]:
     return await hotels_repo.find_all()
 
 
-@router.get("/{hotel_id}")
-async def get_hotel(hotel_id: int) -> SHotel:
-    return await hotels_repo.find_by_id(hotel_id)
+@router.get("/{hotel_slug}")
+async def get_hotel(hotel_slug: str) -> SHotel:
+    return await hotels_repo.find_one_or_none(slug=hotel_slug)
 
 
 @router.get("")
