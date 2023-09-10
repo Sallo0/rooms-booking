@@ -3,7 +3,6 @@ from typing import Literal
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-# TODO: replace redis hardcode with env vars
 class Settings(BaseSettings):
     MODE: Literal["dev", "prod", "test"]
     LOG_LEVEL: Literal["INFO", "DEBUG", "WARNING", "ERROR", "CRITICAL"]

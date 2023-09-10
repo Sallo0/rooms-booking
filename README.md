@@ -23,6 +23,10 @@ docker volume create --name=booking_data
 ```bash
 docker-compose up -d --build
 ```
+> По желанию можно заполнить базу данных данными из файла `test_data.sql`:
+> ```bash
+> docker exec -i database psql -U $DB_USER -d $DB_NAME < test_data.sql
+> 
 
 ## Использование
 
