@@ -23,7 +23,7 @@ services:
     build: .
     env_file:
       - .docker.env
-    command: uvicorn app.main:app --host 0.0.0.0 --reload
+    command: make migrate upserver
     ports:
       - 8000:8000
     volumes:
