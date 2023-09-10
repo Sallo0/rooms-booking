@@ -15,7 +15,7 @@ services:
     expose:
       - ${DB_PORT}
     volumes:
-      - booking_course:/var/lib/postgresql/data
+      - booking_data:/var/lib/postgresql/data
 
   server:
     container_name: server
@@ -25,7 +25,7 @@ services:
         dockerfile: Dockerfile
     env_file:
       - .docker.env
-    command: uvicorn app.main:app --host 0.0.0.0 --reload
+    command: make migrate upserver
     ports:
       - 8000:8000
     depends_on:
@@ -61,6 +61,6 @@ services:
       - redis
 
 volumes:
-  booking_course:
+  booking_data:
     external: true
 

@@ -15,7 +15,7 @@ services:
     ports:
       - ${DB_PORT}:5432
     volumes:
-      - booking_course:/var/lib/postgresql/data
+      - booking_data:/var/lib/postgresql/data
 
   server:
     container_name: server
@@ -62,6 +62,6 @@ services:
       - redis
 
 volumes:
-  booking_course:
+  booking_data:
     external: true
 
