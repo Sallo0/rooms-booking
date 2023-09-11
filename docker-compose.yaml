@@ -1,5 +1,7 @@
 version: '3.8'
 
+name: booking
+
 services:
 
   database:
@@ -18,7 +20,6 @@ services:
       - booking_data:/var/lib/postgresql/data
 
   server:
-    container_name: server
     image: booking-image
     build:
         context: .
@@ -26,23 +27,26 @@ services:
     env_file:
       - .docker.env
     command: make migrate upserver
-    ports:
-      - 8000:8000
+    expose:
+      - 8000
     depends_on:
       - redis
       - database
-#
-#  nginx:
-#    container_name: nginx
-#    image: ${IMAGE_NGINX}
-#    build: ./nginx
-#    ports:
-#      - 127.0.0.1:9000:80
-#    volumes:
-#      - app-static:/usr/src/app/src/static
-#    depends_on:
-#      - server
-#      - bot
+    deploy:
+      replicas: 2
+
+  nginx:
+    container_name: nginx
+    image: nginx-image
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:80:80"
+    volumes:
+      - ./app/static:/usr/src/app/static
+    depends_on:
+      - server
 
   redis:
     container_name: redis
@@ -57,6 +61,8 @@ services:
     env_file:
       - .docker.env
     command: make upcelery
+    volumes:
+      - ./app/static:/usr/src/app/static
     depends_on:
       - redis
 

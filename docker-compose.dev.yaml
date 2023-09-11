@@ -1,5 +1,7 @@
 version: '3.8'
 
+name: booking
+
 services:
 
   database:
@@ -18,7 +20,6 @@ services:
       - booking_data:/var/lib/postgresql/data
 
   server:
-    container_name: server
     image: booking-image
     build: .
     env_file:
@@ -31,18 +32,36 @@ services:
     depends_on:
       - redis
       - database
-#
-#  nginx:
-#    container_name: nginx
-#    image: ${IMAGE_NGINX}
-#    build: ./nginx
-#    ports:
-#      - 127.0.0.1:9000:80
-#    volumes:
-#      - app-static:/usr/src/app/src/static
-#    depends_on:
-#      - server
-#      - bot
+    deploy:
+      replicas: 2
+#      restart_policy:
+#        condition: on-failure
+#        delay: 5s
+#        max_attempts: 3
+#        window: 120s
+#      update_config:
+#        parallelism: 2
+#        delay: 10s
+#        order: start-first
+#      resources:
+#        limits:
+#          cpus: '0.50'
+#          memory: 512M
+#        reservations:
+#          cpus: '0.25'
+#          memory: 256M
+
+  nginx:
+    container_name: nginx
+    image: nginx-image
+    build: ./nginx
+    ports:
+      - "127.0.0.1:9000:80"
+    volumes:
+      - ./app/static:/usr/src/app/static
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+    depends_on:
+      - server
 
   redis:
     container_name: redis
@@ -58,6 +77,8 @@ services:
     env_file:
       - .docker.env
     command: make upcelery
+    volumes:
+      - ./app/static:/usr/src/app/static
     depends_on:
       - redis
 
