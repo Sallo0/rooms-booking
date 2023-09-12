@@ -7,11 +7,11 @@ from fastapi.templating import Jinja2Templates
 from app.bookings.router import add_booking, get_bookings, delete_booking
 from app.hotels.rooms.router import get_rooms_by_time
 from app.hotels.router import get_hotel, get_hotels_by_location_and_time
-from app.utils import format_number_thousand_separator, get_month_days
+from app.pages.utils import get_month_days, format_number_thousand_separator
 
 router = APIRouter(prefix="/pages", tags=["Frontend"])
 
-templates = Jinja2Templates(directory="app/templates")
+templates = Jinja2Templates(directory="app/pages/templates")
 
 
 @router.get("/login", response_class=HTMLResponse)
