@@ -31,9 +31,9 @@ docker-compose up -d --build
 ## Использование
 
 После запуска проекта:
-1. Swagger документация будет доступна по адресу `http://localhost:8000/api/v1/docs`.
-2. Frontend будет доступен по адресу `http://localhost:8000/pages`.
-3. Админка будет доступна по адресу `http://localhost:8000/admin`.
+1. Swagger документация будет доступна по адресу `http://localhost:9000/api/v1/docs`.
+2. Frontend будет доступен по адресу `http://localhost:9000/pages`.
+3. Админка будет доступна по адресу `http://localhost:9000/admin`.
    > Войти в админку можно с помощью логина и пароля, указанных при регистрации пользователя через API или frontend.
 
 
