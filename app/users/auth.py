@@ -38,7 +38,3 @@ async def authenticate_user(email: EmailStr, password: str):
 
 def get_secret_key() -> str:
     return b64encode(token_bytes(32)).decode()
-
-
-if __name__ == '__main__':
-    print(get_secret_key())

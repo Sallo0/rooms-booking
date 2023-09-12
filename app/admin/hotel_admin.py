@@ -4,7 +4,7 @@ from app.hotels.models import Hotels
 
 
 class HotelAdmin(ModelView, model=Hotels):
-    column_list = [Hotels.id, Hotels.name, Hotels.location]
+    column_list = [Hotels.id, Hotels.name, Hotels.slug, Hotels.location]
     can_create = True
     can_delete = True
     can_edit = True
