@@ -4,12 +4,8 @@ from fastapi import Depends, Request
 from jose import JWTError, jwt
 
 from app.config import settings
-from app.exceptions import (
-    AbsentTokenException,
-    InvalidTokenException,
-    TokenExpiredException,
-    UserIsNotPresentException,
-)
+from app.users.exceptions import TokenExpiredException, AbsentTokenException, InvalidTokenException, \
+    UserIsNotPresentException
 from app.users.repo import UsersRepo as users_repo
 
 

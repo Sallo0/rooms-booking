@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, Response
 
-from app.exceptions import InvalidCredentialsException, UserAlreadyExistsException
+from app.users.exceptions import UserAlreadyExistsException, InvalidCredentialsException
 from app.users.auth import authenticate_user, create_access_token, get_password_hash
 from app.users.dependencies import get_current_user
 from app.users.repo import UsersRepo as users_repo
